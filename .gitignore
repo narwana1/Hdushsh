@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+# Raw and derived market data are downloaded on demand and never committed
+# (third-party data licences do not allow redistribution).
+/data/
+.hoplite/
