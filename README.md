@@ -3,6 +3,9 @@
 A ready-made backtest log for CPI releases on NQ: one row per release, dropdowns, automatic labels,
 a Stats tab that fills itself, and a Guide tab with definitions and an ICT replay checklist.
 
+**Continuing the work?** Start with [HANDOFF.md](HANDOFF.md) (status, open questions, how-to) and
+[backtest/RULES.md](backtest/RULES.md) (exact definition of every column).
+
 **Download:** [`CPI_NQ_Backtest_Template.xlsx`](CPI_NQ_Backtest_Template.xlsx?raw=1)
 
 ![CPI Log – part 1 (made-up example rows)](screenshots/cpi_log_part1.png)
@@ -39,10 +42,19 @@ a Stats tab that fills itself, and a Guide tab with definitions and an ICT repla
 ## Rebuilding / checking the file
 
 ```bash
-pip install openpyxl pillow
+pip install -r requirements.txt
 python tools/build_template.py            # writes CPI_NQ_Backtest_Template.xlsx
 python tools/verify_template.py           # needs LibreOffice: recalculates test data and checks every formula
 python tools/render_previews.py           # needs LibreOffice + pdftoppm: writes screenshots/
 ```
 
 Formulas only use functions that work the same in Google Sheets, Excel and LibreOffice.
+
+## Backtesting a release (`backtest/`)
+
+| Script | What it does |
+| --- | --- |
+| `fxreplay_fetch.py` | Logs in to FX Replay and downloads the NQ/ES bars for one release date (credentials from env vars). |
+| `rules.py` | Computes every new CPI Log column from those bars, following [RULES.md](backtest/RULES.md). |
+| `sheet.py` | `snapshot` / `fill` / `check` the Google Sheet (sheet id from `CPI_SHEET_ID`). |
+| `test_rules.py` | Reproduces the two verified rows (12 Aug and 11 Sep 2026) plus unit tests. |

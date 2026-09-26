@@ -2,3 +2,7 @@ __pycache__/
 *.pyc
 .venv/
 /out/
+# backtest: FX Replay data may not be published; the browser profile holds a login cookie
+/backtest/data/
+/backtest/out/
+/backtest/.browser/
